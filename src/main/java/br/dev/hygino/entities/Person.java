@@ -1,5 +1,9 @@
 package br.dev.hygino.entities;
 
+import java.io.Serial;
+import java.io.Serializable;
+
+import br.dev.hygino.dto.PersonInsertDTO;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -8,7 +12,10 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "tb_person")
-public class Person {
+public class Person implements Serializable {
+
+    @Serial
+    private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,6 +29,15 @@ public class Person {
     private String phoneNumber;
 
     public Person() {
+    }
+
+    public Person(PersonInsertDTO dto) {
+        firstName = dto.firstName();
+        lastName = dto.lastName();
+        email = dto.email();
+        address = dto.address();
+        zipCode = dto.zipCode();
+        phoneNumber = dto.phoneNumber();
     }
 
     public Long getId() {
