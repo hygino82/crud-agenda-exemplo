@@ -45,18 +45,15 @@ public class PersonService {
     }
 
     private Person updateEntity(Person entity, PersonInsertDTO dto) {
-        entity.setFirstName(dto.firstName());
-        entity.setLastName(dto.lastName());
+        entity.setName(dto.name());
         entity.setEmail(dto.email());
-        entity.setAddress(dto.address());
-        entity.setZipCode(dto.zipCode());
         entity.setPhoneNumber(dto.phoneNumber());
         return entity;
     }
 
     public PersonDTO buscarPorId(Long id) {
         Optional<Person> optional = personRepository.buscarPorId(id);
-        if (!optional.isPresent()) {
+        if (optional.isEmpty()) {
             throw new IllegalArgumentException("Person with id: " + id + " not found");
         }
         return new PersonDTO(optional.get());
